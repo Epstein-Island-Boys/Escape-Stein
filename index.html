@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* Container that Google Sites embeds */
+        /* Container provided by Google Sites iframe */
         #game-container {
             position: absolute;
             inset: 0;
@@ -33,14 +33,14 @@
             justify-content: center;
         }
 
-        /* GameMaker runner div */
+        /* GameMaker wrapper */
         div.gm4html5_div_class {
             margin: 0;
             padding: 0;
             border: 0;
         }
 
-        /* Canvas: fixed logical resolution */
+        /* Canvas: logical resolution NEVER changes */
         canvas {
             width: 1366px;
             height: 768px;
@@ -50,11 +50,9 @@
             -webkit-interpolation-mode: nearest-neighbor;
             -ms-touch-action: none;
             touch-action: none;
-
-            transform-origin: center center;
         }
 
-        /* Login UI (unchanged) */
+        /* GM login UI (unchanged) */
         div.gm4html5_login {
             padding: 20px;
             position: absolute;
@@ -86,6 +84,7 @@
     <script type="text/javascript"
             src="escapeStein/Blank Pixel Game.js?cachebust=130826170"></script>
 
+    <!-- ✅ SAFE SCALING SCRIPT (no input breakage) -->
     <script>
         const BASE_W = 1366;
         const BASE_H = 768;
@@ -101,7 +100,8 @@
                 container.clientHeight / BASE_H
             );
 
-            canvas.style.transform = `scale(${scale})`;
+            canvas.style.width  = Math.floor(BASE_W * scale) + "px";
+            canvas.style.height = Math.floor(BASE_H * scale) + "px";
         }
 
         window.addEventListener("resize", scaleCanvas);
@@ -117,5 +117,3 @@
 
 </body>
 </html>
-
-
