@@ -84,29 +84,38 @@
     <script type="text/javascript"
             src="escapeStein/Blank Pixel Game.js?cachebust=130826170"></script>
 
-    <!-- ✅ SAFE SCALING SCRIPT (no input breakage) -->
     <script>
-        const BASE_W = 1366;
-        const BASE_H = 768;
+const BASE_W = 1366;
+const BASE_H = 768;
 
-        function scaleCanvas() {
-            const container = document.getElementById("game-container");
-            const canvas = document.getElementById("canvas");
+function scaleCanvas() {
+    const container = document.getElementById("game-container");
+    const canvas = document.getElementById("canvas");
+    const gmDiv = document.getElementById("gm4html5_div_id");
 
-            if (!container || !canvas) return;
+    if (!container || !canvas || !gmDiv) return;
 
-            const scale = Math.min(
-                container.clientWidth / BASE_W,
-                container.clientHeight / BASE_H
-            );
+    const scale = Math.min(
+        container.clientWidth / BASE_W,
+        container.clientHeight / BASE_H
+    );
 
-            canvas.style.width  = Math.floor(BASE_W * scale) + "px";
-            canvas.style.height = Math.floor(BASE_H * scale) + "px";
-        }
+    const w = Math.floor(BASE_W * scale);
+    const h = Math.floor(BASE_H * scale);
 
-        window.addEventListener("resize", scaleCanvas);
-        window.addEventListener("load", scaleCanvas);
-    </script>
+    // Resize canvas visually
+    canvas.style.width  = w + "px";
+    canvas.style.height = h + "px";
+
+    // 🔑 ALSO resize the GameMaker wrapper
+    gmDiv.style.width  = w + "px";
+    gmDiv.style.height = h + "px";
+}
+
+window.addEventListener("resize", scaleCanvas);
+window.addEventListener("load", scaleCanvas);
+</script>
+
 
     <script>
         window.onload = function () {
@@ -117,3 +126,4 @@
 
 </body>
 </html>
+
