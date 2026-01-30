@@ -14,7 +14,7 @@
     <title>Escape Stein</title>
 
     <style>
-        /* Page reset */
+        /* Reset */
         html, body {
             width: 100%;
             height: 100%;
@@ -24,10 +24,10 @@
             overflow: hidden;
         }
 
-        /* Centering container */
+        /* Container that Google Sites embeds */
         #game-container {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -40,28 +40,18 @@
             border: 0;
         }
 
-        /* ✅ Canvas scaling — THIS is the important part */
+        /* Canvas: fixed logical resolution */
         canvas {
-            width: auto;
-            height: auto;
-
-            max-width: 100%;
-            max-height: 100%;
-
-            aspect-ratio: 1366 / 768;
+            width: 1366px;
+            height: 768px;
+            display: block;
 
             image-rendering: optimizeSpeed;
             -webkit-interpolation-mode: nearest-neighbor;
             -ms-touch-action: none;
             touch-action: none;
 
-            display: block;
-        }
-
-        /* Fullscreen support (harmless if disabled in GM) */
-        :-webkit-full-screen #canvas {
-            width: 100%;
-            height: 100%;
+            transform-origin: center center;
         }
 
         /* Login UI (unchanged) */
@@ -92,12 +82,40 @@
         </div>
     </div>
 
+    <!-- GameMaker runner -->
     <script type="text/javascript"
             src="escapeStein/Blank Pixel Game.js?cachebust=130826170"></script>
 
     <script>
-        window.onload = GameMaker_Init;
+        const BASE_W = 1366;
+        const BASE_H = 768;
+
+        function scaleCanvas() {
+            const container = document.getElementById("game-container");
+            const canvas = document.getElementById("canvas");
+
+            if (!container || !canvas) return;
+
+            const scale = Math.min(
+                container.clientWidth / BASE_W,
+                container.clientHeight / BASE_H
+            );
+
+            canvas.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener("resize", scaleCanvas);
+        window.addEventListener("load", scaleCanvas);
+    </script>
+
+    <script>
+        window.onload = function () {
+            GameMaker_Init();
+            scaleCanvas();
+        };
     </script>
 
 </body>
 </html>
+
+
