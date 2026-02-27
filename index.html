@@ -146,23 +146,7 @@
                 canvas.style.height = h + "px";
                 gmDiv.style.width   = w + "px";
                 gmDiv.style.height  = h + "px";
-
-                const video = document.querySelector("video");
-                if (video) {
-                    video.style.width  = w + "px";
-                    video.style.height = h + "px";
-                    video.style.objectFit = "contain";
-                }
             }
-
-            // Watch for GameMaker dynamically adding a video element
-            const observer = new MutationObserver(() => {
-                const video = document.querySelector("video");
-                if (video) {
-                    scaleGame();
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
 
             window.addEventListener("resize", scaleGame);
             window.onload = function () {
