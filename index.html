@@ -134,19 +134,27 @@
             const BASE_H = 768;
 
             function scaleGame() {
-                const canvas = document.getElementById("canvas");
-                const gmDiv  = document.getElementById("gm4html5_div_id");
-                const scale = Math.min(
-                    window.innerWidth  / BASE_W,
-                    window.innerHeight / BASE_H
-                );
-                const w = Math.floor(BASE_W * scale);
-                const h = Math.floor(BASE_H * scale);
-                canvas.style.width  = w + "px";
-                canvas.style.height = h + "px";
-                gmDiv.style.width   = w + "px";
-                gmDiv.style.height  = h + "px";
-            }
+    const canvas = document.getElementById("canvas");
+    const gmDiv  = document.getElementById("gm4html5_div_id");
+    const scale = Math.min(
+        window.innerWidth  / BASE_W,
+        window.innerHeight / BASE_H
+    );
+    const w = Math.floor(BASE_W * scale);
+    const h = Math.floor(BASE_H * scale);
+    canvas.style.width  = w + "px";
+    canvas.style.height = h + "px";
+    gmDiv.style.width   = w + "px";
+    gmDiv.style.height  = h + "px";
+
+    // Scale GameMaker's video element if it exists
+    const video = document.querySelector("video");
+    if (video) {
+        video.style.width  = w + "px";
+        video.style.height = h + "px";
+        video.style.objectFit = "contain";
+    }
+}
 
             window.addEventListener("resize", scaleGame);
             window.onload = function () {
